@@ -20,6 +20,8 @@ router.post("/register", (req,res)=>{
   console.log(req.query["birth"]);
   User.findOne({email:req.query["email"]},(err,respo)=>{
     if(respo !=null){
+      console.log("email");
+      console.log(respo);
       res.json({info:"El correo ya esta registrado."});
     }else{
       if(req.query["password"] !== req.query["checkPassword"]){
