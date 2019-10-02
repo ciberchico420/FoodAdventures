@@ -9,7 +9,7 @@ var cookieParser = require('cookie-parser')
 require("./passport/conexionDB");
 require('./passport/passport');
 //Configurar 
-app.set("port",420);
+app.set("port",4200);
 
 //Midlewares
 app.set(morgan('dev'));
