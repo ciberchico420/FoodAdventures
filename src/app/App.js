@@ -35,7 +35,7 @@ class App extends Component{
             return(
             
                 <div className="content"> 
-                
+                    AGREGADO DESDE GIT!!!!!!!!!!
                         <BrowserRouter>
                         <Header ></Header>
                         <Switch>
