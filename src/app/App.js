@@ -34,10 +34,14 @@ class App extends Component{
         if(this.props.currentUser.loaded){
             return(
             
-                <div className="content"> 
+                <div id="AppContainer"> 
                         <BrowserRouter>
                         <Header ></Header>
-                        <Switch>
+                        <div id="AppBody">
+
+                        
+                            
+                             <Switch>
                             <Route path="/" component={Home} exact />
                             <Route path="/login" component={LogIn} />
                             <Route path="/logout" component={Logout} />
@@ -48,6 +52,8 @@ class App extends Component{
                             <ProtectedRoute exact path="/control" minRole={Rules.ENTER_CONTROL} user={this.props.currentUser}  component={ControlPanel} />
                             <ProtectedRoute path="/control/:sec" minRole={Rules.ENTER_CONTROL} user={this.props.currentUser}  component={ControlPanel} />
                             </Switch>
+                        
+                       </div>
                         </BrowserRouter>
                  
                 </div>

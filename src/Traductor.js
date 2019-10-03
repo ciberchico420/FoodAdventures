@@ -52,6 +52,25 @@ module.exports ={
     SUBMIT:{es:"Enviar",en:"Submit"},
     DELETE:{es:"Borrar",en:"Delete"},
 
+    //LOGIN 
+    LOG_IN:{es:"Iniciar sesion",en:"Log in"},
+    ENTER_AN_EMAIL:{es:"Ingresa un correo electronico",en:"Enter an e-mail"},
+    PASSWORD:{es:"Contraseña",en:"Password"},
+    LOGIN_WELL_NEVER_MSG:{es:"Nunca compartiremos tu información.",en:"We won't share your information with anyone."},
+    REMEMBER_ME:{es:"Recúerdame",en:"Remember me"},
+    SEND:{es:"Enviar",en:"Send"},
+
+    //REGISTER
+    USER_REGISTRATION:{es:"Registro de usuario",en:"User registration"},
+    REPEAT_PASSWORD:{es:"Repite la contraseña",en:"Repeat password"},
+    NAMES_PLACEHOLDER:{es:"Nombre(s)",en:"Name (s)"},
+    SURENAME:{es:"Apellidos",en:"Surename"},
+    BIRTHDAY:{es:"Cumpleaños",en:"Birthday"},
+    GENDER:{es:"Género",en:"Gender"},
+    WOMAN_GENDER:{es:"Mujer",en:"Woman"},
+    MAN_GENDER:{es:"Hombre",en:"Man"},
+    NOT_BINARY_GENDER:{es:"No binario",en:"Not binary"},
+    ACCEPT_TERMS_AND_CONTIDIONS:{es:"Acepto los términos y condiciones",en:"I agree with the terms and conditions."},
 
     //PAGINA TOUR.js
 

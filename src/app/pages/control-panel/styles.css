@@ -1,17 +1,45 @@
+
+
+#App{
+height: 100%;
+
+}
+#AppContainer{
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+}
+#AppBody{
+
+ height: 100%;
+
+}
+
+#contenedorGeneral{ 
+  display: flex;
+  height: 100%;
+}
+#contenido{
+}
+
 #sidebar{
 background: #f8f9fa;
-height: 100%;
-margin-top:-1px;
-position: absolute;
 border-right:1px solid #b1b1b1;
 }
 .sidebar-header{
 background:#ebebeb;
 padding: 5px;
 margin-top:1em;
+
 padding:1em;
 color:#bbbbbb;
 }
+
+.sidebar-body{
+    list-style-type:none;
+    padding:0;
+}
+
 .sidebar-body li{
     padding: 1em;
     width: 100%;
@@ -36,16 +64,4 @@ color:#bbbbbb;
     text-decoration: none; 
     width: 100%;
     padding:1em;
-}
-
-.sidebar-body{
-    list-style-type:none;
-    padding:0;
-    width: 100%;
-}
-.wrapper{
-    display: flex;
-    width: 100%;
-    height: 100%;
-    align-items: stretch;
 }

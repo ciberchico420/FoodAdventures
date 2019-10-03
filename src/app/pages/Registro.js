@@ -3,6 +3,7 @@ const axios = require('axios');
 import {connect} from 'react-redux';
 import { set } from 'mongoose';
 import {findCurrentUser} from '../../redux/actions/currentUserActions'
+import Lang from "../../Traductor"
 
 
 class Registro extends Component{
@@ -31,6 +32,7 @@ class Registro extends Component{
               if(response.data.info != undefined){
                   esto.setState({["info"]:response.data.info})
               }
+              //Agrega el usuario
               esto.props.findCurrentUser();
         
           })
@@ -45,67 +47,77 @@ class Registro extends Component{
     render(){
             return(<div className="container">
                <VerErrores state={this.state}></VerErrores>
-            <div className="card m-sm-1 m-md-5">
+            <div className="card m-xs-1 m-md-5">
                 <div className="card-body">
-                    <h3 className="card-title"><p className="material-icons">person</p>Registro de usuario</h3>
+                    <h3 className="card-title"><p className="material-icons">person</p>{Lang.USER_REGISTRATION[this.props.currentUser.lang]}</h3>
                     <div className="card-text">
                     <form onSubmit={this.enviarFormulario}>
                         <div className="form-group">
-                            <label name="username"><p className="material-icons">email</p><b> Correo electrónico</b></label>
-                            <input className="form-control" type="email" onChange={this.registrarInput} name="email" aria-describedby="emailHelp" placeholder="Ingresa correo electrónico"/>
+                            <label name="username"><p className="material-icons">email</p><b> {Lang.EMAIL[this.props.currentUser.lang]}</b></label>
+                            <input className="form-control" type="email" onChange={this.registrarInput} name="email" aria-describedby="emailHelp" placeholder={Lang.ENTER_AN_EMAIL[this.props.currentUser.lang]}/>
                         </div>
                             <div className="form-group">
-                                <label><p className="material-icons">lock</p><b> Contraseña</b></label>
+                                <label><p className="material-icons">lock</p><b> {Lang.PASSWORD[this.props.currentUser.lang]}</b></label>
                                 <div className="row pl-3">
-                                <input type="password"  onChange={this.registrarInput} name="password" className="form-control col-sm-12 col-md-4 mr-md-3 mb-3" placeholder="Contraseña"/> 
-                                <input type="password"  onChange={this.registrarInput} name="checkPassowrd" className="form-control col-sm-12 col-md-4" placeholder="Repite contraseña"/> 
+                                <input type="password"  onChange={this.registrarInput} name="password" className="form-control col-sm-12 col-md-4 mr-md-3 mb-3" placeholder={Lang.PASSWORD[this.props.currentUser.lang]}/> 
+                                <input type="password"  onChange={this.registrarInput} name="checkPassowrd" className="form-control col-sm-12 col-md-4" placeholder={Lang.REPEAT_PASSWORD[this.props.currentUser.lang]}/> 
                                 </div>
                              
                             </div>
                         <div className="form-group">
-                            <label name="username"><p className="material-icons">people</p><b> Nombre completo</b></label>
+                            <label name="username"><p className="material-icons">people</p><b>{Lang.FULL_NAME[this.props.currentUser.lang]}</b></label>
                             <div className="row pl-3">
-                            <input className="form-control col-sm-12 col-md-4 mr-md-3 mb-3" type="text" onChange={this.registrarInput} name="nombre" aria-describedby="emailHelp" placeholder="Nombre(s)"/>
-                            <input className="form-control col-sm-12 col-md-4" type="text" onChange={this.registrarInput} name="apellido" aria-describedby="emailHelp" placeholder="Apellido(s)"/>
+                            <input className="form-control col-sm-12 col-md-4 mr-md-3 mb-3" type="text" onChange={this.registrarInput} name="nombre" aria-describedby="emailHelp" placeholder={Lang.NAMES_PLACEHOLDER[this.props.currentUser.lang]}/>
+                            <input className="form-control col-sm-12 col-md-4" type="text" onChange={this.registrarInput} name="apellido" aria-describedby="emailHelp" placeholder={Lang.SURENAME[this.props.currentUser.lang]}/>
                             </div>
                            
                         </div>
 
                         <div className="form-group">
-                            <label name="username"><p className="material-icons">people</p><b> Fecha de nacimiento</b></label>
+                            <label name="username"><p className="material-icons">people</p><b>{Lang.BIRTHDAY[this.props.currentUser.lang]}</b></label>
                             <div className="row pl-3">
-                            <input className="form-control form-control-lg col-sm-12 col-md-4 mr-3" type="date" onChange={this.registrarInput} name="birth" aria-describedby="emailHelp" placeholder="Nombre(s)"/>
+                            <input className="form-control form-control-lg col-sm-12 col-md-4 mr-3" type="date" onChange={this.registrarInput} name="birth"/>
 
                             </div>
                            
                         </div>
 
                         
-                        <div className="form-group">
-                            <label name="username"><p className="material-icons">people</p><b> Genero</b></label>
-                                <label className="radio-inline pr-4" htmlFor="genero-0">
-                                <input type="radio" name="gender" onChange={this.registrarInput} id="genero-0" value="m" checked="checked"/>
-                                Mujer
-                                </label> 
-                                <label className="radio-inline pr-4" htmlFor="genero-1">
-                                <input type="radio" name="gender" onChange={this.registrarInput} id="genero-1" value="w"/>
-                                Hombre
-                                </label> 
-                                <label className="radio-inline pr-4" htmlFor="genero-2">
-                                <input type="radio" name="gender" onChange={this.registrarInput} id="genero-2" value="x"/>
-                                No binario
-                            </label>
-                        </div>
-                        <div className="form-group">
-                            <label name="username"><p className="material-icons">people</p><b>Terminos y condiciones</b></label>
-                            <div className="row pl-3">
-                            <input className="form-control form-control-lg col-4 mr-3" type="checkbox" onChange={this.registrarInput} name="terminos"/>Acepto
-
-                            </div>
+                        <div className="form-group"> 
+                        <label name="username"><p className="material-icons">people</p><b> {Lang.GENDER[this.props.currentUser.lang]}</b></label>
+                            <fieldset>
                            
+                                <label className="radio-inline mr-4" htmlFor="genero-0">
+                                <input type="radio" name="gender" onChange={this.registrarInput}  value="m"/>
+                                {Lang.WOMAN_GENDER[this.props.currentUser.lang]}
+                                </label> 
+                                <label className="radio-inline mr-4" htmlFor="genero-1">
+                                <input type="radio" name="gender" onChange={this.registrarInput}  value="w"/>
+                                {Lang.MAN_GENDER[this.props.currentUser.lang]}
+                                </label> 
+                                <label className="radio-inline mr-4" htmlFor="genero-2">
+                                <input type="radio" name="gender" onChange={this.registrarInput} value="x"/>
+                                {Lang.NOT_BINARY_GENDER[this.props.currentUser.lang]}
+                            </label>
+
+                            </fieldset>
+                            
                         </div>
                        
-                        <button type="submit" className="btn btn-lg btn-primary float-right">Enviar</button>
+                        <div className="row col-12">
+                             
+                             <mark className="col-xs-12 col-md-10">
+                            <div className="row">  
+                                    <p className="col-sm-8 col-md-5"> {Lang.ACCEPT_TERMS_AND_CONTIDIONS[this.props.currentUser.lang]}</p>
+                                    <input className="form-control col-sm-4 col-md-1 my-auto" type="checkbox" onChange={this.registrarInput} name="terminos"/>
+                                </div>
+                            </mark> 
+                            <div className="col-xs-12  col-md-1 p-2"> 
+                              <button type="submit" className="btn btn-lg btn-primary float-right">Enviar</button>
+                            </div>
+                          
+                           
+                        </div>
                         </form>
                     </div>
                     </div>

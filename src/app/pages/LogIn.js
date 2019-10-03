@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import { set } from 'mongoose';
 import {findCurrentUser} from '../../redux/actions/currentUserActions'
 import {Redirect} from 'react-router-dom';
+import Lang from '../../Traductor';
 
 
 class LogIn extends Component{
@@ -47,23 +48,23 @@ class LogIn extends Component{
                <VerErrores state={this.state}></VerErrores>
             <div className="card m-5 p-3">
                 <div className="card-body">
-                    <h3 className="card-title"><p className="material-icons">person</p> Iniciar sesión</h3>
+                    <h3 className="card-title"><p className="material-icons">person</p> {Lang.LOG_IN[this.props.currentUser.lang]}</h3>
                     <div className="card-text">
                     <form onSubmit={this.enviarFormulario}>
                         <div className="form-group">
-                            <label name="username"><p className="material-icons">email</p><b> Correo electrónico</b></label>
-                            <input className="form-control"  onChange={this.registrarInput} name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresa correo electrónico"/>
-                            <small id="emailHelp" className="form-text text-muted">Nunca compartiremos tu información con nadie.</small>
+                            <label name="username"><p className="material-icons">email</p><b> {Lang.EMAIL[this.props.currentUser.lang]}</b></label>
+                            <input className="form-control"  onChange={this.registrarInput} name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder={Lang.ENTER_AN_EMAIL[this.props.currentUser.lang]}/>
+                            <small id="emailHelp" className="form-text text-muted"> {Lang.LOGIN_WELL_NEVER_MSG[this.props.currentUser.lang]}</small>
                         </div>
                         <div className="form-group">
-                            <label><p className="material-icons">lock</p><b> Contraseña</b></label>
-                            <input type="password"  onChange={this.registrarInput} name="password" className="form-control" id="exampleInputPassword1" placeholder="Contraseña"/>
+                            <label><p className="material-icons">lock</p><b>{Lang.PASSWORD[this.props.currentUser.lang]}</b></label>
+                            <input type="password"  onChange={this.registrarInput} name="password" className="form-control" id="exampleInputPassword1" placeholder={Lang.PASSWORD[this.props.currentUser.lang]}/>
                         </div>
                         <div className="form-group form-check">
                             <input type="checkbox" name="password" className="form-check-input" id="exampleCheck1"/>
-                            <label className="form-check-label">Recordarme</label>
+                            <label className="form-check-label">{Lang.REMEMBER_ME[this.props.currentUser.lang]}</label>
                         </div>
-                        <button type="submit" className="btn btn-lg btn-primary float-right">Enviar</button>
+                        <button type="submit" className="btn btn-lg btn-primary float-right">{Lang.SEND[this.props.currentUser.lang]}</button>
                         </form>
                     </div>
                     </div>

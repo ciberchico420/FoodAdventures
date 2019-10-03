@@ -1,5 +1,5 @@
 const express = require("express");
-const app = express();
+
 const morgan = require("morgan");
 const path = require("path");
 const passport = require("passport");
@@ -9,6 +9,8 @@ var cookieParser = require('cookie-parser')
 require("./passport/conexionDB");
 require('./passport/passport');
 //Configurar 
+const app = express();
+
 app.set("port",4200);
 
 //Midlewares

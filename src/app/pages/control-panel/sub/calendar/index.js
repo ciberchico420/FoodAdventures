@@ -70,9 +70,9 @@ class Index extends Component{
     render() {
         if(this.state.eventosLoaded){
               return (
-            <div className="row"  style={{margin:'1%'}}>
-            <div className="col-5"> <Calendario events={this.state.events} onDayClick={this.onDayClick}/></div>
-            <div className="col-7"><div className="card">
+            <div className="row"  style={{padding:'2rem'}}>
+            <div className="col-12 col-lg-5 mb-3 mb-lg-0"> <Calendario events={this.state.events} onDayClick={this.onDayClick}/></div>
+            <div className="col-12 col-lg-7"><div className="card">
                 <div className="card-title" style={{background:"#f0f0f0",padding:"0px"}}><h3 className="p-1">{this.state.dayTitle}</h3> </div><div className="card-body"></div></div>
                  </div>
             </div>
