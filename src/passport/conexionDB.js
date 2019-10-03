@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 var os = require('os');
 let con;
+const drokt =true;
 
-
-if(os.hostname().indexOf("local") > -1){
+if(drokt){
 
 con = mongoose.connect("mongodb://casiel:Drokirifa123@localhost:27017/FoodAdventures?authSource=admin");
 }else{
