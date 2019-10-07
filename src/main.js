@@ -14,12 +14,16 @@ const app = express();
 app.set("port",4200);
 
 //Midlewares
+
+
+
 app.set(morgan('dev'));
 
 app.use(cookieParser())
 
 
-app.use( bodyParser.urlencoded({ extended: false }) );
+app.use(bodyParser.json({limit:"6mb"})); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true,limit:"6mb" })); // support encoded bodies
 
 app.use(passport.initialize());
 

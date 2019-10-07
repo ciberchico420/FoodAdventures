@@ -12,7 +12,7 @@ const ReservSchema = new Schema({
     phone:{type:String, required:true},
     observations:{type:String,required:false},
     date:{type:Date,required:true},
-    hour:{type:Number,required:true}
+    hour:{type:Array,required:true}
 })
 
 

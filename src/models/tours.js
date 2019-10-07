@@ -7,7 +7,7 @@ const ToursSchema = new Schema({
     info:{type:String,required:false},
     img:{type:Array,required:false},
     price:{type:Number,required:true},
-    days:{type:Array,required:true}
+    schedule:{type:Array,required:true}
 })
 
 

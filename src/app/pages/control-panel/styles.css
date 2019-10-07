@@ -10,7 +10,8 @@ height: 100%;
     height: 100%; 
 }
 #AppBody{
-
+    display: flex;
+    flex-direction: column;
  height: 100%;
 
 }
@@ -20,11 +21,14 @@ height: 100%;
   height: 100%;
 }
 #contenido{
+    display: inline-block;
 }
 
 #sidebar{
+    height: 100%;
 background: #f8f9fa;
 border-right:1px solid #b1b1b1;
+border-bottom:3px solid #b1b1b1;
 }
 .sidebar-header{
 background:#ebebeb;

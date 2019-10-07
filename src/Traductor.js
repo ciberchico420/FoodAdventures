@@ -51,6 +51,9 @@ module.exports ={
     ADD_FILE:{es:"Agregar un archivo",en:"Add a file"},
     SUBMIT:{es:"Enviar",en:"Submit"},
     DELETE:{es:"Borrar",en:"Delete"},
+    LOADING:{es:"Cargando...",en:"Loading..."},
+    DONE_MSG:{es:"¡Listo!",en:"Done"},
+    PLS_UPLOAD_IMG:{es:"Por favor sube una imagen",en:"Please upload an image"},
 
     //LOGIN 
     LOG_IN:{es:"Iniciar sesion",en:"Log in"},

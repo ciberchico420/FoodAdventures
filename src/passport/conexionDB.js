@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 var os = require('os');
 let con;
-const drokt =true;
+const drokt =false;
 
 if(drokt){
 

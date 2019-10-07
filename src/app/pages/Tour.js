@@ -24,6 +24,11 @@ class Tour extends Component{
         this.pagar = this.pagar.bind(this);
         this.onChange = this.onChange.bind(this);
         this.cambiarHora =this.cambiarHora.bind(this);
+        this.disableTiles = this.disableTiles.bind(this);
+     
+    }
+    setPhoneInput(elem){
+       var iti = intlTelInput(elem,{preferredCountries:["mx","us","ca"]});
     }
     componentDidMount(){
         const esto = this;
@@ -31,9 +36,25 @@ class Tour extends Component{
             esto.setState({tourInfo:res.data,loaded:true});
             
         })
+        if(this.phoneInput != null){
+           /* this.phoneInput.current.capture().then((uri)=>{
+                console.log("Hola",uri);
+            })*/
+            console.log("co;o",this.phoneInput)
+        }
+
+       
     }
 
     onClickDate(value){
+        if(this.state.hasSelectedHour){
+            
+            var hora = this.state.horaSeleccionada;
+            value.setHours(hora[0]);
+            value.setMinutes(hora[1]);
+
+        }
+
         this.setState({diaSeleccionado:value});
         console.log(value)
     }
@@ -48,7 +69,7 @@ class Tour extends Component{
     }
 
     pagar(e){
-        console.log(this.props)
+        console.log(this.state)
         const esto = this;
         if(this.state.hasSelectedHour){
               Axios.post("/api/addReservation",null,{params:{
@@ -71,18 +92,18 @@ class Tour extends Component{
     }
 
     cambiarHora(e){
-        console.log(e.target.value)
+        
         try{
-            let horas = e.target.value.replace(":00 pm","")
+            let hora = e.target.value.split(":");
             let newT = new Date(this.state.diaSeleccionado.valueOf());
-            newT.setHours(horas);
-            newT.setMinutes(0);
+            newT.setHours(hora[0]);
+            newT.setMinutes(hora[1]);
             newT.setSeconds(0);
-    
-            console.log(newT.toString());
             this.setState({hasSelectedHour:true});
-            this.setState({horaSeleccionada:horas})
+            this.setState({horaSeleccionada:hora})
+            console.log("Cambiar hora",e)
         }catch(err){
+            console.log("Error cambiar hora",err)
             this.setState({hasSelectedHour:false});
         }
 
@@ -99,16 +120,19 @@ class Tour extends Component{
                 <h3><i className="fas fa-calendar-day"></i> {this.state.diaSeleccionado.getDate()} de {this.state.meses[this.state.diaSeleccionado.getMonth()]}</h3>
                     <div>
                         <h5>{Lang.TOUR_CONTACT_NUMBER[this.props.currentUser.lang]}</h5>
-                        <input className="form-control" placeholder="(044) +55" name="phone" onChange={this.onChange}></input>
+                        <input type="tel" className="form-control form-control-lg" ref={this.setPhoneInput}  name="phone" onChange={this.onChange}></input>
                         
                     </div>
                     <br></br>
                     <MasPersonas esto={this} user={this.props.currentUser}></MasPersonas>
                     <br></br>
                     <div className="input-group">
-                        <span><h5>{Lang.OBSERVATIONS[this.props.currentUser.lang]}</h5><small className="p-1 text-secondary">({Lang.TOUR_OBS_INFO[this.props.currentUser.lang]})</small></span>
+                        <span className="col-12 col-lg-3 pb-3">
+                            <h5>{Lang.OBSERVATIONS[this.props.currentUser.lang]}</h5>
+                            <small className="p-1 text-secondary">({Lang.TOUR_OBS_INFO[this.props.currentUser.lang]})</small>
+                            </span>
                         <br></br>
-                        <textarea name="observations" onChange={this.onChange} className="form-control col-12"></textarea>
+                        <textarea name="observations" onChange={this.onChange} className="form-control"></textarea>
 
                     </div>
                     <br></br>
@@ -116,14 +140,10 @@ class Tour extends Component{
                        
                        <div className="input-group-prepend">
                             <div className="input-group-text" style={{}}>{Lang.HOUR[this.props.currentUser.lang]}</div>
-                            </div> <select onChange={this.cambiarHora} className="form-control col-5">
-                                <option>{Lang.TOUR_SELECT_SCHEDULE[this.props.currentUser.lang]}</option>
-                                    <option>15:00 pm</option>
-                                    <option>17:00 pm</option>
-                                    </select>
+                            </div> {this.ponerHorarios()}
                     </div>
                     <br></br>
-                    <div className="input-group col-4 float-right">
+                    <div className="input-group col-12 col-lg-4 float-right">
                            
                             <input className="form-control" onChange={this.registrarInput} value={this.calcularPrecio(this)} disabled={true}/>
                             <div className="input-group-prepend">
@@ -136,14 +156,55 @@ class Tour extends Component{
             )
         }
     }
+    ponerHorarios(){
+        var tt = []
+        this.state.tourInfo.schedule.forEach(element => {
+            if(element.cod.includes("selHour")){
+                tt.push(<option>{element.data}</option>);
+            }
+        });
+        return(<select onChange={this.cambiarHora} className="form-control col-11 col-lg-5">
+                                <option>{Lang.TOUR_SELECT_SCHEDULE[this.props.currentUser.lang]}</option>
+                                   {tt}
+                                    </select>);
+    }
 
     disableTiles({activeStartDay,date,view}){
+        const sch = this.state.tourInfo.schedule;
+        var ret = false;
 
-        if(date.getDate() === 13){
-            return true;
-        }else{
-            return false;
+       // console.log(sch);
+
+        //Checar dias
+        var diasDisponibles = [];
+        var diasExcepcion =[];
+        sch.forEach(element => {
+            if(element.cod.includes("all")){
+                const num = element.cod.replace("all","");
+                diasDisponibles.push(parseInt(num));
+            }
+            if(element.cod.includes("excDay")){
+                const dia = new Date(element.data);
+                
+                if(date.getDate() === dia.getDate() && date.getMonth() === dia.getMonth() && date.getFullYear() === dia.getFullYear()){
+                    ret = true;
+                }
+            }
+      
+        });
+        if(diasDisponibles.length >0){
+             if(!diasDisponibles.includes(date.getDay())){
+            ret = true;
+            }
         }
+        const hoy = new Date();
+        if(date.getTime() < hoy.getTime()){
+            ret = true;
+        }
+       
+        
+
+        return ret;
     }
 
     contenido(){
@@ -156,9 +217,9 @@ class Tour extends Component{
                   
                     <div className="card-body">
                         <div className="row">
-                            <div className="col-4"><h5 className="text-center">{Lang.TOUR_SELECT_PREFERED_DAY[this.props.currentUser.lang]}</h5>
+                            <div className="col-12 col-lg-4 mb-4"><h5 className="text-center">{Lang.TOUR_SELECT_PREFERED_DAY[this.props.currentUser.lang]}</h5>
                             <SmallCal minDetail="year" locale={this.props.currentUser.lang} value={this.state.diaSeleccionado} onClickDay={this.onClickDate} tileDisabled={this.disableTiles}></SmallCal></div>
-                            <div className="col-8">{this.contenidoDerecha()}</div>
+                            <div className="col-12 col-lg-8">{this.contenidoDerecha()}</div>
                             
                         </div>  
                     </div>

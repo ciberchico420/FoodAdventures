@@ -50,7 +50,7 @@ class TourCard extends Component{
         return(
             
             <div id={this.props.info._id} className="card col-md-3 m-1" style={{padding:0,maxHeight:"30em",minHeight:"30em",overflow:"hidden"}}>
-            <img className="card-image-top img-fluid" src="/img/0.png"></img>
+            <img className="card-image-top img-fluid" src={"uploads/tourImages/"+this.props.info.img[0]}></img>
              
                 <div className="card-body">
                 <h3 className="card-title" style={{height:"2.5em",overflow:"hidden"}}>{this.props.info.title}</h3>
