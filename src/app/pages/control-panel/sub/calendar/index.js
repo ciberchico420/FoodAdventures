@@ -52,13 +52,36 @@ class Index extends Component{
     crearEventos(){
         Axios.get("/api/reservations").then(res =>{
 
-            var evs = []
+            var evs = [] 
+            var toursWithRes = {};
+            Axios.get("/api/tours").then(tours=>{
+               
+                tours.data.forEach(tour => {
+                    if(tour.reservations.length >0){
+                        toursWithRes={...toursWithRes,[tour._id]:tour}   
+                    }
+                });
+                console.log(toursWithRes);
+               
+                res.data.forEach(reservation => {
+    
+                    const tour = toursWithRes[reservation.tourId];
+                    if(tour){
+                        const evP = {title:tour.title,start:reservation.date};
+                        if(evs.indexOf(evP) == -1){
+                            evs.push(evP)
+                        }
+                    }
+                   
+               
+                }); 
 
-            res.data.forEach(element => {
-                evs.push({title:"TOUR",start:element.date,end:element.date})
-            });
-            this.setState({eventosLoaded:true});
-            this.setState({events:evs});
+                this.setState({events:evs});
+                this.setState({eventosLoaded:true});
+            })
+           
+         
+        
         })
     }
     onDayClick(info){
@@ -67,11 +90,14 @@ class Index extends Component{
 
 
     }
+    onEventClick(info){
+        console.log(info);
+    }
     render() {
         if(this.state.eventosLoaded){
               return (
             <div className="row"  style={{padding:'2rem'}}>
-            <div className="col-12 col-lg-5 mb-3 mb-lg-0"> <Calendario events={this.state.events} onDayClick={this.onDayClick}/></div>
+            <div className="col-12 col-lg-5 mb-3 mb-lg-0"> <Calendario selectable={true} onEventClick={this.onEventClick}  events={this.state.events} onDayClick={this.onDayClick}/></div>
             <div className="col-12 col-lg-7"><div className="card">
                 <div className="card-title" style={{background:"#f0f0f0",padding:"0px"}}><h3 className="p-1">{this.state.dayTitle}</h3> </div><div className="card-body"></div></div>
                  </div>
@@ -104,7 +130,7 @@ class Calendario extends Component{
             aspectRatio={1} selectable={true} 
             displayEventTime={false}
             eventRender={this.eventRender}
-            
+            eventClick={this.props.onEventClick}
             dateClick={this.props.onDayClick} defaultView="dayGridMonth" plugins={[ dayGridPlugin,interactionPlugin ]} />
         )
       }

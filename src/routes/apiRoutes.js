@@ -171,11 +171,19 @@ router.post('/addReservation',
         reserv.phone = datos.phone;
         reserv.date = datos.date;
         reserv.hour = datos.hour;
+     
         reserv.save().then(doc=>{
-          res.json(infoMsg("Reservacion realizada","success"));
-        }).catch(reason=>{
-          res.json(infoMsg("Error:" +reason,"danger"));
-        });
+
+          Tour.findById(datos.tourId).then(tt =>{
+            tt.reservations = [...tt.reservations,doc._id];
+            tt.save().then(a=>{console.log("Reservacion guardada")})
+          });
+  
+              res.json(infoMsg("Reservacion realizada","success"));
+            }).catch(reason=>{
+              res.json(infoMsg("Error:" +reason,"danger"));
+            });
+       
       
       }catch(err){
         console.log(err)
