@@ -24,7 +24,7 @@
     "file-system": "^2.2.2",
     "gh-pages": "^2.1.1",
     "js-cookie": "^2.2.1",
-    "mongoose": "^5.7.1",
+    "mongoose": "^5.7.5",
     "react-calendar": "^2.19.2",
     "react-timekeeper": "^2.0.4",
     "redux-thunk": "^2.3.0"
